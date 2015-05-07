@@ -60,9 +60,43 @@
 		this.mouseMove = this.mouseMoveListener.bind(this);
 		
 		this.canvas.addEventListener('mousedown', this.mouseDown, false);
-		this.canvas.addEventListener('touchstart', this.mouseDown, false);
+		this.canvas.addEventListener('touchstart', this.DragEvent, false);
 	
 	};
+
+	Hanoi.prototype.DragEvent = function(e) {
+
+		var touches = e.changedTouches,
+			first = touches[0],
+			type;
+
+		switch(e.type) {
+
+			case 'touchstart':
+			type = 'mousedown';
+			break;
+	 
+		  case 'touchmove':
+			type = 'mousemove';
+			e.preventDefault();
+			break;
+	 
+		  case 'touchend':
+			type = 'mouseup';
+			break;
+		
+		  default:
+			return;
+		}
+
+		var simulateEvent = new MouseEvent(type, {
+
+			'view': window,
+			'bubbles': true
+		});
+
+		first.target.dispatchEvent(simulateEvent);
+	}
 
 	Hanoi.prototype.mouseDownListener = function(e) {
 
@@ -102,21 +136,21 @@
         
         if(this.dragging) {
             window.addEventListener('mousemove', this.mouseMove, false);
-            window.addEventListener('touchmove', this.mouseMove, false);
+            window.addEventListener('touchmove', this.DragEvent, false);
         }
         
         window.addEventListener('mouseup', this.mouseUp, false);
-        window.addEventListener('touchend', this.mouseUp, false);
+        window.addEventListener('touchend', this.DragEvent, false);
         this.canvas.removeEventListener('mousedown', this.mouseDown, false);
-        this.canvas.removeEventListener('touchstart', this.mouseDown, false);
+        this.canvas.removeEventListener('touchstart', this.DragEvent, false);
 	};
 
 	Hanoi.prototype.mouseUpListener = function() {
 
 		this.canvas.addEventListener("mousedown", this.mouseDown, false);
-		this.canvas.addEventListener('touchstart', this.mouseDown, false);
+		this.canvas.addEventListener('touchstart', this.DragEvent, false);
 	    window.removeEventListener("mouseup", this.mouseUp, false);
-	    window.removeEventListener('touchend', this.mouseUp, false);  
+	    window.removeEventListener('touchend', this.DragEvent, false);  
 	    
 		if (this.dragging) {
 			this.dragging = false;
