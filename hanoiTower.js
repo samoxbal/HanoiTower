@@ -26,6 +26,7 @@
         this.dropIndex;
         this.savedPosition;
         this.from;
+        this.empty = true;
 		
 		this.initEvents();
 
@@ -115,6 +116,7 @@
 					this.dragHoldY = this.mouseY - this.disks[i].y;
 					this.dragIndex = i;
 					this.savePosition(this.disks[this.dragIndex]);
+					this.empty = false;
 
 					for (var k=0; k < this.rods.length; k++) {
 			    
@@ -171,7 +173,7 @@
 		    } 
 		}
 	    
-		if (this.droppable) {
+		if (this.droppable && !this.empty) {
 		    
 		    this.fit(this.dropIndex, this.rods[this.dropIndex], this.disks[this.dragIndex]);
 		    this.removeDisk(this.from);
