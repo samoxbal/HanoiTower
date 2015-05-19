@@ -1,3 +1,3 @@
 #HanoiTower canvas game
 
-Game logic and drag'n'drop functionality, made with HTML5 Canvas.
+Game logic and drag'n'drop functionality, made by JavaScript and HTML5 Canvas.
