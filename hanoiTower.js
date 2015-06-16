@@ -69,7 +69,7 @@
 
 		var touches = e.changedTouches,
 			first = touches[0],
-			type;
+			type = '';
 
 		switch(e.type) {
 
